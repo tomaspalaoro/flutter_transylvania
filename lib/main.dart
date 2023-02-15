@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:convert'; //para trabajar con JSON
+import 'package:http/http.dart' as http; //import http
 
 void main() {
   runApp(const MyApp());
