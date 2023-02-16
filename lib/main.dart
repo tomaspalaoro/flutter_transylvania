@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_transylvania/login.dart';
 import 'dart:convert'; //para trabajar con JSON
 import 'package:http/http.dart' as http; //import http
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: LoginScreen(),
     );
   }
 }
