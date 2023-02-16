@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert'; //para trabajar con JSON
 import 'package:http/http.dart' as http; //import http
 
-String url = "https://api.thecatapi.com/v1/categories";
+String url = "https://api.thecatapi.com/v1/images/search?limit=10";
 
 Future<dynamic> _getListado() async {
   //dynamic indica que puede ser cualquier tipo de dato
@@ -81,8 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
     //for each elemento de la lista
     for (var miElemento in info) {
       lista.add(ListTile(
-        leading: Icon(Icons.access_alarm),
-        title: Text(miElemento["name"]),
+        leading: Image.network(miElemento["url"]),
+        title: Text(miElemento["id"]),
         tileColor: Color.fromARGB(255, 207, 218, 227),
         trailing: Icon(Icons.point_of_sale_rounded),
       ));
