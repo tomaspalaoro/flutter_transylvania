@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_transylvania/home.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -80,8 +81,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
-                            // TODO: Implement login logic
                             print("login");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()),
+                            );
                           }
                         },
                       ),
