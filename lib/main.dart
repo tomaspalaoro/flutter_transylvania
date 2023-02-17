@@ -3,6 +3,7 @@ import 'package:flutter_transylvania/Screens/home.dart';
 import 'package:flutter_transylvania/Screens/listado.dart';
 import 'package:flutter_transylvania/Screens/login.dart';
 import 'package:flutter_transylvania/Screens/ocio.dart';
+import 'package:flutter_transylvania/theme.dart';
 import 'dart:convert'; //para trabajar con JSON
 import 'package:http/http.dart' as http; //import http
 
@@ -19,9 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: temaOscuro,
       initialRoute: '/',
       routes: {
         '/': (context) => LoginScreen(),

@@ -59,13 +59,12 @@ class OcioScreen extends StatelessWidget {
               ),
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              // TODO enviar comentario
-            },
-            child: Text(
-              'Enviar',
-              style: TextStyle(fontSize: 16),
+          TextButton(
+            onPressed: () {}, //TODO
+            child: Text('Enviar'),
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.white,
+              textStyle: TextStyle(fontSize: 16),
             ),
           ),
           Row(
@@ -111,7 +110,7 @@ Row rowComentario(String username, String comentario) {
           margin: const EdgeInsets.all(8.0),
           padding: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
-            color: Colors.grey[300],
+            color: Colors.black,
             borderRadius: BorderRadius.circular(8.0),
           ),
           child: Column(

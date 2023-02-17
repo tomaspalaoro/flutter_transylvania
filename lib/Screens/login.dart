@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// ignore_for_file: prefer_const_constructors
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -13,20 +14,19 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.purple),
+      appBar: AppBar(
+        title: Text(''),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                FlutterLogo(
-                  size: 120.0,
-                ),
+              children: [
                 SizedBox(height: 16.0),
                 Text(
-                  'Login',
+                  'Iniciar sesión',
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 SizedBox(height: 24.0),
@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         obscureText: true,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'Please enter your password';
+                            return 'Introduce una contraseña';
                           }
                           return null;
                         },
@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: 24.0),
                       SizedBox(height: 24.0),
                       ElevatedButton(
-                        child: Text('Iniciar sesión'),
+                        child: Text('Entrar'),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ElevatedButton(
                         child: Text('Registrarme'),
                         onPressed: () {
-                          // TODO: Navigate to registration screen
+                          // TODO
                         },
                       ),
                     ],
