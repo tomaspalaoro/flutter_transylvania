@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
                   ElevatedButton(
                     child: Text('Ocio'),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/ocio');
+                      Navigator.pushNamed(context, '/listado');
                     },
                   ),
                   ElevatedButton(

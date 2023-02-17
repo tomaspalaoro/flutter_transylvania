@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_transylvania/Screens/home.dart';
+import 'package:flutter_transylvania/Screens/listado.dart';
 import 'package:flutter_transylvania/Screens/login.dart';
 import 'package:flutter_transylvania/Screens/ocio.dart';
 import 'dart:convert'; //para trabajar con JSON
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => LoginScreen(),
         '/home': (context) => HomeScreen(),
+        '/listado': (context) => ListadoScreen(),
         '/ocio': (context) => OcioScreen(),
       },
     );
