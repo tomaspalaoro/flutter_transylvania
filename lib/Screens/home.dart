@@ -8,40 +8,51 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Hotel Transylvania'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Hotel Transylvania',
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 16.0),
-              Text(
-                'Prepárate para una noche verdaderamente inolvidable en este espeluznante hotel, perfecto para los amantes de Halloween. ¡Ven si quieres pasar miedo y un buen rato a la vez!',
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 32.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  ElevatedButton(
-                    child: Text('Ocio'),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/listado');
-                    },
-                  ),
-                  ElevatedButton(
-                    child: Text('Servicios'),
-                    onPressed: () {
-                      // TODO
-                    },
-                  ),
-                ],
-              ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+            colors: [
+              Color.fromARGB(255, 35, 6, 51),
+              Color(0xFF8F14E9),
             ],
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image(
+                  image: AssetImage('assets/images/htlogo.png'),
+                ),
+                SizedBox(height: 62.0),
+                Text(
+                  'Prepárate para una noche verdaderamente inolvidable en este espeluznante hotel, perfecto para los amantes de Halloween. ¡Ven si quieres pasar miedo y un buen rato a la vez!',
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 32.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    ElevatedButton(
+                      child: Text('Ocio'),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/listado');
+                      },
+                    ),
+                    ElevatedButton(
+                      child: Text('Servicios'),
+                      onPressed: () {
+                        // TODO
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
