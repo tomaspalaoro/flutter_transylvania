@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 // ignore_for_file: prefer_const_constructors
 
 class LoginScreen extends StatefulWidget {
@@ -10,30 +11,83 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   String _email = '';
   String _password = '';
+  bool _rememberMe = false;
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  Future<void> _loginGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      // Use the googleAuth.idToken and googleAuth.accessToken
+      // to authenticate with your backend server.
+    } catch (error) {
+      print(error);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 36, 8, 69),
       appBar: AppBar(
         title: Text(''),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(64.0),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 16.0),
-                Text(
-                  'Iniciar sesión',
-                  style: Theme.of(context).textTheme.headline5,
+                Image.asset(
+                  'assets/images/htIniciales.png',
+                  height: 100,
                 ),
+                SizedBox(height: 16.0),
                 SizedBox(height: 24.0),
                 Form(
                   key: _formKey,
                   child: Column(
-                    children: <Widget>[
+                    children: [
+                      //BOTÓN GOOGLE
+                      ElevatedButton(
+                        onPressed: () {
+                          onPressed:
+                          _loginGoogle();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 12, 62, 169),
+                          minimumSize: Size(double.infinity,
+                              50), // Set minimum width and height
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/google_logo.png',
+                              height: 34.0,
+                            ),
+                            SizedBox(width: 10),
+                            Text('Entrar con Google'),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(
+                            vertical: 20), //Tamaño separador
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              width: 2,
+                              color: Colors.grey, //Color del separador
+                            ),
+                          ),
+                        ),
+                      ),
+                      //FORMULARIO
                       TextFormField(
                         decoration: InputDecoration(
                           hintText: 'Email',
@@ -74,24 +128,47 @@ class _LoginScreenState extends State<LoginScreen> {
                           _password = value!;
                         },
                       ),
-                      SizedBox(height: 24.0),
-                      SizedBox(height: 24.0),
-                      ElevatedButton(
-                        child: Text('Entrar'),
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            _formKey.currentState!.save();
-                            print("login");
-                            Navigator.pushReplacementNamed(context, '/home');
-                          }
-                        },
+                      SizedBox(height: 16.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Checkbox(
+                            value: _rememberMe,
+                            onChanged: (value) {
+                              setState(() {
+                                _rememberMe = value!;
+                              });
+                            },
+                          ),
+                          Text('Recordarme'),
+
+                          SizedBox(width: 16.0),
+                          //BOTÓN LOGIN NORMAL
+                          ElevatedButton(
+                            child: Text('Iniciar sesión'),
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                _formKey.currentState!.save();
+                                print("login");
+                                Navigator.pushReplacementNamed(
+                                    context, '/home');
+                              }
+                            },
+                          ),
+                        ],
                       ),
                       SizedBox(height: 16.0),
-                      ElevatedButton(
-                        child: Text('Registrarme'),
-                        onPressed: () {
+                      //BOTÓN REGISTRO
+                      GestureDetector(
+                        onTap: () {
                           // TODO
                         },
+                        child: Text(
+                          '¿Usuario nuevo? Regístrate',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
                       ),
                     ],
                   ),
