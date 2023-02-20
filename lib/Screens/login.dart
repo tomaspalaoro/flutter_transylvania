@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _rememberMe = false;
 
   Future<dynamic> _postHttp() async {
-    final params = {
+    Map<String, String> params = {
       'action': 'login',
       'user': '{"email": "$_email", "password": "$_password"}',
     };
@@ -36,13 +36,35 @@ class _LoginScreenState extends State<LoginScreen> {
       ;
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
-        print(jsonResponse);
+        if (jsonResponse['success'] == true) {
+          print('Usuario correcto');
+          entrarHome();
+        } else {
+          showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+                title: const Text('Error al iniciar sesión'),
+                content: const Text('Usuario incorrecto'),
+                actions: [
+                  TextButton(
+                    child: Text('Ok'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ]),
+          );
+        }
       } else {
         print('Petición fallida: ${response.statusCode}.');
       }
     } catch (e) {
       print('Exception: $e');
     }
+  }
+
+  void entrarHome() {
+    Navigator.pushReplacementNamed(context, '/home');
   }
 
   Future<void> _loginGoogle() async {
@@ -180,7 +202,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
                                 _postHttp();
-                                //Navigator.pushReplacementNamed(context, '/home');
                               }
                             },
                           ),
