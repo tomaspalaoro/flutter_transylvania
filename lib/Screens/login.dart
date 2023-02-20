@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import 'dart:convert'; //para trabajar con JSON
+import 'package:http/http.dart' as http; //import http
+
 // ignore_for_file: prefer_const_constructors
+
+final ip = "192.168.202.235";
+final ruta = "http://$ip/gestionhotelera/sw_user.php";
+
+final GoogleSignIn _googleSignIn = GoogleSignIn();
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -13,7 +22,28 @@ class _LoginScreenState extends State<LoginScreen> {
   String _password = '';
   bool _rememberMe = false;
 
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  Future<dynamic> _postHttp() async {
+    final params = {
+      'action': 'login',
+      'user': '{"email": "$_email", "password": "$_password"}',
+    };
+
+    try {
+      final url = Uri.parse(ruta);
+      final response = await http
+          .post(url, body: params)
+          .timeout(const Duration(seconds: 5));
+      ;
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        print(jsonResponse);
+      } else {
+        print('Petición fallida: ${response.statusCode}.');
+      }
+    } catch (e) {
+      print('Exception: $e');
+    }
+  }
 
   Future<void> _loginGoogle() async {
     try {
@@ -149,9 +179,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
-                                print("login");
-                                Navigator.pushReplacementNamed(
-                                    context, '/home');
+                                _postHttp();
+                                //Navigator.pushReplacementNamed(context, '/home');
                               }
                             },
                           ),
