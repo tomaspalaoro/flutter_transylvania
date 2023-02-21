@@ -24,7 +24,18 @@ class _ActividadesScreenState extends State<ActividadesScreen> {
       if (response.statusCode == 200) {
         List<dynamic> arrayJSON = jsonDecode(response.body);
         for (var element in arrayJSON) {
-          actividades.add(Actividad.fromJson(element));
+          List<dynamic> listaComentarios = element["comments"];
+          double sumaValoraciones = 0.0;
+          int numComentarios = 0;
+
+          listaComentarios.forEach((comentario) {
+            sumaValoraciones += comentario["rating"];
+            numComentarios++;
+          });
+
+          double mediaValoraciones =
+              numComentarios > 0 ? sumaValoraciones / numComentarios : 0.0;
+          actividades.add(Actividad.fromJson(element, mediaValoraciones));
         }
       } else {
         print('Petición fallida: ${response.statusCode}.');
