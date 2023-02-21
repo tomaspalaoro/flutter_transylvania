@@ -19,7 +19,11 @@ ListView listado(List<Modelo> objetos) {
                 fit: BoxFit.cover,
               ),
               onTap: () {
-                Navigator.pushNamed(context, '/info', arguments: "");
+                Navigator.pushNamed(context, '/info', arguments: {
+                  'nombre': objetos[index].nombre,
+                  'descripcion': objetos[index].descripcion,
+                  'imagen': objetos[index].imagen
+                });
               },
             ),
             SizedBox(height: 8),

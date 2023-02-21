@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 // ignore_for_file: prefer_const_constructors
 
 class InfoScreen extends StatefulWidget {
-  final String titulo = "";
-  final String imagen = "";
-  final String descripcion = "";
+  const InfoScreen({super.key});
 
   /*InfoScreen({
     required this.titulo,
@@ -17,19 +15,12 @@ class InfoScreen extends StatefulWidget {
 }
 
 class _InfoScreenState extends State<InfoScreen> {
-  late String _miTitulo;
-
   int rating = 0;
   bool favorito = false;
 
   @override
-  void initState() {
-    super.initState();
-    _miTitulo = widget.titulo;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    Map arguments = ModalRoute.of(context)?.settings.arguments as Map;
     return Scaffold(
       appBar: AppBar(
         title: Text('Opciones de ocio'),
@@ -38,7 +29,7 @@ class _InfoScreenState extends State<InfoScreen> {
         children: [
           Flexible(
             child: Image.network(
-              'https://www.lavanguardia.com/files/og_thumbnail/uploads/2021/12/09/61b224feec6bc.jpeg',
+              arguments['imagen'],
               height: 200,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -53,7 +44,7 @@ class _InfoScreenState extends State<InfoScreen> {
               //Texto en flexible y en overflow
               Flexible(
                 child: Text(
-                  _miTitulo,
+                  arguments['nombre'],
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: 20),
                 ),
@@ -98,7 +89,7 @@ class _InfoScreenState extends State<InfoScreen> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor enim mauris, ut sagittis felis volutpat id. Nulla facilisi.',
+              arguments['descripcion'] ?? "Descripción vacía",
               style: TextStyle(fontSize: 16),
             ),
           ),
