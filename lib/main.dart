@@ -3,7 +3,8 @@ import 'package:flutter_transylvania/Screens/actividades.dart';
 import 'package:flutter_transylvania/Screens/home.dart';
 import 'package:flutter_transylvania/Components/listado.dart';
 import 'package:flutter_transylvania/Screens/login.dart';
-import 'package:flutter_transylvania/Screens/ocio.dart';
+import 'package:flutter_transylvania/Screens/info.dart';
+import 'package:flutter_transylvania/Screens/ocios.dart';
 import 'package:flutter_transylvania/theme.dart';
 import 'dart:convert'; //para trabajar con JSON
 import 'package:http/http.dart' as http; //import http
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => HomeScreen(),
         '/actividades': (context) => ActividadesScreen(),
         '/ocio': (context) => OcioScreen(),
+        '/info': (context) => InfoScreen(),
       },
     );
   }

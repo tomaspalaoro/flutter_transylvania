@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
 // ignore_for_file: prefer_const_constructors
 
-class OcioScreen extends StatefulWidget {
-  /*final String imagePath;
-  final String description;
-  final String location;
+class InfoScreen extends StatefulWidget {
+  final String titulo = "";
+  final String imagen = "";
+  final String descripcion = "";
 
-  OcioScreen({
-    required this.imagePath,
-    required this.description,
-    required this.location,
+  /*InfoScreen({
+    required this.titulo,
+    required this.imagen,
+    required this.descripcion,
   });*/
 
   @override
-  _OcioScreenState createState() => _OcioScreenState();
+  _InfoScreenState createState() => _InfoScreenState();
 }
 
-class _OcioScreenState extends State<OcioScreen> {
-  //TextEditingController commentController = TextEditingController();
-  //List<String> comments = ["Comment 1", "Comment 2"];
+class _InfoScreenState extends State<InfoScreen> {
+  late String _miTitulo;
 
   int rating = 0;
   bool favorito = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _miTitulo = widget.titulo;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +53,7 @@ class _OcioScreenState extends State<OcioScreen> {
               //Texto en flexible y en overflow
               Flexible(
                 child: Text(
-                  'Título de ejemplo',
+                  _miTitulo,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: 20),
                 ),
