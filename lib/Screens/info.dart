@@ -3,13 +3,6 @@ import 'package:flutter/material.dart';
 
 class InfoScreen extends StatefulWidget {
   const InfoScreen({super.key});
-
-  /*InfoScreen({
-    required this.titulo,
-    required this.imagen,
-    required this.descripcion,
-  });*/
-
   @override
   _InfoScreenState createState() => _InfoScreenState();
 }
@@ -44,7 +37,7 @@ class _InfoScreenState extends State<InfoScreen> {
               //Texto en flexible y en overflow
               Flexible(
                 child: Text(
-                  arguments['nombre'],
+                  arguments['nombre'] ?? "Nombre vacío",
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: 20),
                 ),

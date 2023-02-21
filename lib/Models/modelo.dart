@@ -6,5 +6,5 @@ class Modelo {
   var valoracion;
   var imagen;
 
-  Modelo({this.nombre, this.descripcion, this.imagen});
+  Modelo({this.nombre, this.descripcion, this.imagen, this.valoracion});
 }
