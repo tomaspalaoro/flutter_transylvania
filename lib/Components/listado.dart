@@ -29,6 +29,7 @@ ListView listado(List<Modelo> objetos) {
                   'nombre': objetos[index].nombre,
                   'descripcion': objetos[index].descripcion,
                   'imagen': objetos[index].imagen,
+                  'comentarios': objetos[index].comentarios,
                 });
               },
             ),

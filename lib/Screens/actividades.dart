@@ -25,17 +25,8 @@ class _ActividadesScreenState extends State<ActividadesScreen> {
         List<dynamic> arrayJSON = jsonDecode(response.body);
         for (var element in arrayJSON) {
           List<dynamic> listaComentarios = element["comments"];
-          double sumaValoraciones = 0.0;
-          int numComentarios = 0;
 
-          listaComentarios.forEach((comentario) {
-            sumaValoraciones += comentario["rating"];
-            numComentarios++;
-          });
-
-          double mediaValoraciones =
-              numComentarios > 0 ? sumaValoraciones / numComentarios : 0.0;
-          actividades.add(Actividad.fromJson(element, mediaValoraciones));
+          actividades.add(Actividad.fromJson(element, listaComentarios));
         }
       } else {
         print('Petición fallida: ${response.statusCode}.');

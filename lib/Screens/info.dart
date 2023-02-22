@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 // ignore_for_file: prefer_const_constructors
 
@@ -14,6 +16,7 @@ class _InfoScreenState extends State<InfoScreen> {
   @override
   Widget build(BuildContext context) {
     Map arguments = ModalRoute.of(context)?.settings.arguments as Map;
+    print(arguments['comentarios']);
     return Scaffold(
       appBar: AppBar(
         title: Text('Opciones de ocio'),
@@ -90,16 +93,7 @@ class _InfoScreenState extends State<InfoScreen> {
           //CAJA DE COMENTARIOS
           Expanded(
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  // Comentarios
-                  rowComentario("Maria",
-                      "¡Emplazamiento increible con muchas facilidades!"),
-                  rowComentario("Jose", "Muy bueno!!"),
-                  rowComentario("Juan", "increíble"),
-                  rowComentario("Pablo", "Está muy bien."),
-                ],
-              ),
+              child: generarComentarios(arguments['comentarios']),
             ),
           ),
           //ESCRIBIR COMENTARIO
@@ -141,6 +135,17 @@ class _InfoScreenState extends State<InfoScreen> {
   }
 }
 
+Column generarComentarios(List<dynamic> comentarios) {
+  List<Row> rows = [];
+  for (var element in comentarios) {
+    rows.add(rowComentario(
+        element['username'], element['comment'], element['rating']));
+  }
+  return Column(
+    children: rows,
+  );
+}
+
 Row rowEstrellasComments(int cantidadEstrellas) {
   List<Icon> icons = [];
   for (int i = 0; i < cantidadEstrellas; i++) {
@@ -151,7 +156,8 @@ Row rowEstrellasComments(int cantidadEstrellas) {
   );
 }
 
-Row rowComentario(String username, String comentario) {
+Row rowComentario(String username, String comentario, var valoracion) {
+  int cantEstrellas = valoracion.toInt();
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -179,7 +185,7 @@ Row rowComentario(String username, String comentario) {
                     username,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
-                  rowEstrellasComments(3)
+                  rowEstrellasComments(cantEstrellas)
                 ],
               ),
               SizedBox(height: 8),

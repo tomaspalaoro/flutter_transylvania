@@ -5,6 +5,12 @@ class Modelo {
   var precio;
   var valoracion;
   var imagen;
+  var comentarios;
 
-  Modelo({this.nombre, this.descripcion, this.imagen, this.valoracion});
+  Modelo(
+      {this.nombre,
+      this.descripcion,
+      this.imagen,
+      this.valoracion,
+      this.comentarios});
 }
