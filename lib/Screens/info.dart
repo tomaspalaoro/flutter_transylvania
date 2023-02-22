@@ -1,6 +1,8 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_transylvania/Components/conexiones.dart';
+import 'package:flutter_transylvania/Models/actividad.dart';
 // ignore_for_file: prefer_const_constructors
 
 class InfoScreen extends StatefulWidget {
@@ -13,19 +15,13 @@ class _InfoScreenState extends State<InfoScreen> {
   int rating = 0;
   bool favorito = false;
 
-  @override
-  Widget build(BuildContext context) {
-    Map arguments = ModalRoute.of(context)?.settings.arguments as Map;
-    print(arguments['comentarios']);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Opciones de ocio'),
-      ),
-      body: Column(
+  Column mostrarInfo(Actividad actividad) {
+    if (actividad.nombre != null) {
+      return Column(
         children: [
           Flexible(
             child: Image.network(
-              arguments['imagen'],
+              actividad.imagen ?? "",
               height: 200,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -40,7 +36,7 @@ class _InfoScreenState extends State<InfoScreen> {
               //Texto en flexible y en overflow
               Flexible(
                 child: Text(
-                  arguments['nombre'] ?? "Nombre vacío",
+                  actividad.nombre ?? "Nombre vacío",
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: 20),
                 ),
@@ -85,7 +81,7 @@ class _InfoScreenState extends State<InfoScreen> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              arguments['descripcion'] ?? "Descripción vacía",
+              actividad.descripcion ?? "Descripción vacía",
               style: TextStyle(fontSize: 16),
             ),
           ),
@@ -93,7 +89,7 @@ class _InfoScreenState extends State<InfoScreen> {
           //CAJA DE COMENTARIOS
           Expanded(
             child: SingleChildScrollView(
-              child: generarComentarios(arguments['comentarios']),
+              child: generarComentarios(actividad.comentarios),
             ),
           ),
           //ESCRIBIR COMENTARIO
@@ -130,8 +126,31 @@ class _InfoScreenState extends State<InfoScreen> {
             ],
           ),
         ],
-      ),
-    );
+      );
+    } else {
+      return Column();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Map arguments = ModalRoute.of(context)?.settings.arguments as Map;
+    Actividad actividad = new Actividad();
+
+    Future esperarActividad() async {
+      print(arguments['nombre']);
+      actividad = await Conexiones.getActividadWhere(
+          arguments['modelo'], arguments['nombre']);
+    }
+
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Opciones de ocio'),
+        ),
+        body: FutureBuilder(
+          future: esperarActividad(),
+          builder: (context, snapshot) => mostrarInfo(actividad),
+        ));
   }
 }
 

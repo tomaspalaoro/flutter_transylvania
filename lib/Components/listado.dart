@@ -25,11 +25,14 @@ ListView listado(List<Modelo> objetos) {
                 fit: BoxFit.cover,
               ),
               onTap: () {
+                print(objetos.runtimeType.toString());
                 Navigator.pushNamed(context, '/info', arguments: {
+                  'modelo': objetos.runtimeType.toString(),
                   'nombre': objetos[index].nombre,
+                  /*                  
                   'descripcion': objetos[index].descripcion,
                   'imagen': objetos[index].imagen,
-                  'comentarios': objetos[index].comentarios,
+                  'comentarios': objetos[index].comentarios,*/
                 });
               },
             ),
