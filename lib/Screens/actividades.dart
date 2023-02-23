@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_transylvania/Components/conexiones.dart';
-import 'package:flutter_transylvania/Models/actividad.dart';
+import 'package:flutter_transylvania/Components/provider.dart';
 import 'package:flutter_transylvania/Components/listado.dart';
+import 'package:provider/provider.dart';
 
 class ActividadesScreen extends StatefulWidget {
   const ActividadesScreen({super.key});
@@ -11,18 +11,17 @@ class ActividadesScreen extends StatefulWidget {
 }
 
 class _ActividadesScreenState extends State<ActividadesScreen> {
-  List<Actividad> actividades = [];
-
   @override
   Widget build(BuildContext context) {
+    final conexionProvider = Provider.of<ConexionProvider>(context);
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Actividades"),
-      ),
-      body: FutureBuilder(
-        future: Conexiones.setActividades(actividades),
-        builder: (context, snapshot) => listado(actividades),
-      ),
-    );
+        appBar: AppBar(
+          title: Text("Actividades"),
+        ),
+        body: FutureBuilder(
+            future: conexionProvider.loadActivities(),
+            builder: (context, snapshot) =>
+                listado(conexionProvider.getCurrentActivities())));
   }
 }

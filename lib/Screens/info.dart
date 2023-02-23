@@ -1,8 +1,7 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_transylvania/Components/conexiones.dart';
+import 'package:flutter_transylvania/Components/provider.dart';
 import 'package:flutter_transylvania/Models/actividad.dart';
+import 'package:provider/provider.dart';
 // ignore_for_file: prefer_const_constructors
 
 class InfoScreen extends StatefulWidget {
@@ -15,7 +14,29 @@ class _InfoScreenState extends State<InfoScreen> {
   int rating = 0;
   bool favorito = false;
 
-  Column mostrarInfo(Actividad actividad) {
+  Actividad actividad = Actividad();
+
+  Future<void> prueba() async {
+    print("hola");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Map arguments = ModalRoute.of(context)?.settings.arguments as Map;
+    final conexionProvider = Provider.of<ConexionProvider>(context);
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Opciones de ocio'),
+        ),
+        body: FutureBuilder(
+          future: conexionProvider.loadWhere(
+              arguments['modelo'], arguments['nombre']),
+          builder: (context, snapshot) =>
+              mostrarInfo(conexionProvider.getCurrentActividad()),
+        ));
+  }
+
+  dynamic mostrarInfo(Actividad actividad) {
     if (actividad.nombre != null) {
       return Column(
         children: [
@@ -128,29 +149,8 @@ class _InfoScreenState extends State<InfoScreen> {
         ],
       );
     } else {
-      return Column();
+      return CircularProgressIndicator();
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    Map arguments = ModalRoute.of(context)?.settings.arguments as Map;
-    Actividad actividad = new Actividad();
-
-    Future esperarActividad() async {
-      print(arguments['nombre']);
-      actividad = await Conexiones.getActividadWhere(
-          arguments['modelo'], arguments['nombre']);
-    }
-
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Opciones de ocio'),
-        ),
-        body: FutureBuilder(
-          future: esperarActividad(),
-          builder: (context, snapshot) => mostrarInfo(actividad),
-        ));
   }
 }
 

@@ -1,10 +1,13 @@
 import 'dart:convert'; //para trabajar con JSON
 import 'package:flutter_transylvania/Models/actividad.dart';
-import 'package:flutter_transylvania/constants.dart';
 import 'package:http/http.dart' as http; //import http
 
+const String JSON_ACTIVIDADES =
+    "https://fluttertransylvania-default-rtdb.firebaseio.com/Actividad.json";
+
 class Conexiones {
-  static Future<dynamic> setActividades(List<Actividad> actividades) async {
+  Future<List<Actividad>> getActividades() async {
+    List<Actividad> activities = [];
     try {
       final url = Uri.parse(JSON_ACTIVIDADES);
       final response = await http.get(url);
@@ -14,18 +17,20 @@ class Conexiones {
         for (var element in arrayJSON) {
           List<dynamic> listaComentarios = element["comments"];
 
-          actividades.add(Actividad.fromJson(element, listaComentarios));
+          activities.add(Actividad.fromJson(element, listaComentarios));
         }
+        return activities;
       } else {
         print('Petición fallida: ${response.statusCode}.');
+        return activities;
       }
     } catch (e) {
       print('Exception: $e');
+      return activities;
     }
   }
 
-  static Future<Actividad> getActividadWhere(
-      String modelo, String nombre) async {
+  /*Future<Actividad> getActividadWhere(String modelo, String nombre) async {
     try {
       final url = Uri.parse(JSON_ACTIVIDADES);
       final response = await http.get(url);
@@ -45,5 +50,5 @@ class Conexiones {
       print('Exception: $e');
       return Actividad();
     }
-  }
+  }*/
 }
