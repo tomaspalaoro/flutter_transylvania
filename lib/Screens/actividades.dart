@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_transylvania/Components/provider.dart';
 import 'package:flutter_transylvania/Components/listado.dart';
+import 'package:flutter_transylvania/Connection/provider.dart';
 import 'package:provider/provider.dart';
 
 class ActividadesScreen extends StatefulWidget {

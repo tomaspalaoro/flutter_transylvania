@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_transylvania/Components/conexiones.dart';
+import 'package:flutter_transylvania/Connection/conexiones.dart';
 import 'package:flutter_transylvania/Models/actividad.dart';
 
 class ConexionProvider extends ChangeNotifier {

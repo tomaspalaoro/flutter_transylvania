@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_transylvania/Components/provider.dart';
+import 'package:flutter_transylvania/Connection/provider.dart';
 import 'package:flutter_transylvania/Screens/actividades.dart';
 import 'package:flutter_transylvania/Screens/home.dart';
 import 'package:flutter_transylvania/Screens/info.dart';

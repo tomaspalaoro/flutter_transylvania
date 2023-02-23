@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_transylvania/Components/provider.dart';
+import 'package:flutter_transylvania/Connection/provider.dart';
 import 'package:flutter_transylvania/Models/actividad.dart';
 import 'package:provider/provider.dart';
 // ignore_for_file: prefer_const_constructors
@@ -149,7 +149,7 @@ class _InfoScreenState extends State<InfoScreen> {
         ],
       );
     } else {
-      return CircularProgressIndicator();
+      return Center(child: CircularProgressIndicator());
     }
   }
 }
