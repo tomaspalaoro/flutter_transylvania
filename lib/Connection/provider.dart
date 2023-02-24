@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_transylvania/Connection/conexiones.dart';
 import 'package:flutter_transylvania/Models/actividad.dart';
+import 'package:flutter_transylvania/Models/comentario.dart';
 
 class ConexionProvider extends ChangeNotifier {
   final Conexiones _conexiones = Conexiones();
@@ -27,6 +28,14 @@ class ConexionProvider extends ChangeNotifier {
         _actividad = element;
       }
     }
+    notifyListeners();
+  }
+
+  void addComment(String activityId, Comment comment) async {
+    print(comment.comment);
+    await _conexiones.addComentario(
+        activityId, comment.comment, comment.rating, comment.username);
+    //_comments.add(comment);
     notifyListeners();
   }
 }

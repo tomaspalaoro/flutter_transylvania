@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_transylvania/Connection/provider.dart';
 import 'package:flutter_transylvania/Models/actividad.dart';
+import 'package:flutter_transylvania/Models/comentario.dart';
 import 'package:provider/provider.dart';
 // ignore_for_file: prefer_const_constructors
 
@@ -31,12 +32,15 @@ class _InfoScreenState extends State<InfoScreen> {
         body: FutureBuilder(
           future: conexionProvider.loadWhere(
               arguments['modelo'], arguments['nombre']),
-          builder: (context, snapshot) =>
-              mostrarInfo(conexionProvider.getCurrentActividad()),
+          builder: (context, snapshot) => mostrarInfo(
+              conexionProvider.getCurrentActividad(), conexionProvider),
         ));
   }
 
-  dynamic mostrarInfo(Actividad actividad) {
+  dynamic mostrarInfo(Actividad actividad, ConexionProvider conexionProvider) {
+    final _formKey = GlobalKey<FormState>();
+    final _commentController = TextEditingController();
+
     if (actividad.nombre != null) {
       return Column(
         children: [
@@ -117,6 +121,7 @@ class _InfoScreenState extends State<InfoScreen> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: TextField(
+              controller: _commentController,
               decoration: InputDecoration(
                 hintText: 'Añade un comentario...',
                 border: InputBorder.none,
@@ -126,7 +131,12 @@ class _InfoScreenState extends State<InfoScreen> {
           //BOTÓN ENVIAR
           TextButton(
             onPressed: () {
-              //TODO
+              final comment = Comment(
+                comment: 'Prueba',
+                username: 'Prueba',
+                rating: 5.0,
+              );
+              conexionProvider.addComment(actividad.id, comment);
             },
             child: Text('Enviar'),
             style: TextButton.styleFrom(

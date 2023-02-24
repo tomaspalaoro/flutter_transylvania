@@ -8,7 +8,8 @@ class Modelo {
   var comentarios;
 
   Modelo(
-      {this.nombre,
+      {this.id,
+      this.nombre,
       this.descripcion,
       this.imagen,
       this.valoracion,

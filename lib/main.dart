@@ -18,7 +18,9 @@ class AppState extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<ConexionProvider>(
-            create: (context) => ConexionProvider())
+          create: (context) => ConexionProvider(),
+          lazy: false,
+        )
       ],
       child: MyApp(),
     );

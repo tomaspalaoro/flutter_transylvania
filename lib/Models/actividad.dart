@@ -2,7 +2,8 @@ import 'package:flutter_transylvania/Models/modelo.dart';
 
 class Actividad extends Modelo {
   Actividad(
-      {super.nombre,
+      {super.id,
+      super.nombre,
       super.descripcion,
       super.imagen,
       super.valoracion,
@@ -21,6 +22,7 @@ class Actividad extends Modelo {
         numComentarios > 0 ? sumaValoraciones / numComentarios : 0.0;
 
     return Actividad(
+      id: json['id'],
       nombre: json['name'],
       descripcion: json['description'],
       imagen: json['image'],
