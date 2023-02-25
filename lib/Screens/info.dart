@@ -4,6 +4,7 @@ import 'package:flutter_transylvania/Models/actividad.dart';
 import 'package:flutter_transylvania/Models/comentario.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 // ignore_for_file: prefer_const_constructors
 
@@ -202,7 +203,10 @@ class _InfoScreenState extends State<InfoScreen> {
                     if (_textController.text != null) {
                       final comment = Comment(
                         comment: _textController.text,
-                        username: 'Prueba',
+                        username: conexionProvider
+                                .getPreferencias()
+                                .getString("user") ??
+                            "Prueba",
                         rating: rating.toDouble(),
                       );
                       conexionProvider.addComment(actividad.id, comment);

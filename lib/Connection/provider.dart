@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_transylvania/Connection/conexiones.dart';
 import 'package:flutter_transylvania/Models/actividad.dart';
 import 'package:flutter_transylvania/Models/comentario.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ConexionProvider extends ChangeNotifier {
   final Conexiones _conexiones = Conexiones();
@@ -9,6 +10,20 @@ class ConexionProvider extends ChangeNotifier {
   List<Comment> _comentarios = [];
   List<String> _accesibilidad = [];
   Actividad _actividad = Actividad();
+  late SharedPreferences _prefs;
+
+  ConexionProvider() {
+    inicializarPrefs();
+  }
+
+  Future<void> inicializarPrefs() async {
+    _prefs = await SharedPreferences.getInstance();
+    notifyListeners();
+  }
+
+  SharedPreferences getPreferencias() {
+    return _prefs;
+  }
 
   List<Actividad> getCurrentActivities() {
     return _activities;
