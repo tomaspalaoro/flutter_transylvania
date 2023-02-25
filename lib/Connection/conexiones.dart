@@ -14,9 +14,7 @@ class Conexiones {
       if (response.statusCode == 200) {
         List<dynamic> arrayJSON = jsonDecode(response.body);
         for (dynamic element in arrayJSON) {
-          List<dynamic> listaComentarios = element["comments"];
-
-          activities.add(Actividad.fromJson(element, listaComentarios));
+          activities.add(Actividad.fromJson(element));
         }
         //print("getActividades");
         return activities;

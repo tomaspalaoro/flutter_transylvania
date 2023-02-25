@@ -6,6 +6,7 @@ class Modelo {
   var valoracion;
   var imagen;
   var comentarios;
+  var accesibilidad;
 
   Modelo(
       {this.id,
@@ -13,5 +14,6 @@ class Modelo {
       this.descripcion,
       this.imagen,
       this.valoracion,
-      this.comentarios});
+      this.comentarios,
+      this.accesibilidad});
 }

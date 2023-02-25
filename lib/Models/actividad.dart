@@ -7,10 +7,11 @@ class Actividad extends Modelo {
       super.descripcion,
       super.imagen,
       super.valoracion,
-      super.comentarios});
+      super.comentarios,
+      super.accesibilidad});
 
-  factory Actividad.fromJson(
-      Map<String, dynamic> json, List<dynamic> comentarios) {
+  factory Actividad.fromJson(Map<String, dynamic> json) {
+    List<dynamic> comentarios = json['comments'];
     //CALCULAR RATING
     double sumaValoraciones = 0.0;
     int numComentarios = 0;
@@ -30,12 +31,12 @@ class Actividad extends Modelo {
       }
     }
     return Actividad(
-      id: json['id'],
-      nombre: json['name'],
-      descripcion: json['description'],
-      imagen: json['image'],
-      comentarios: comentarios,
-      valoracion: mediaValoraciones,
-    );
+        id: json['id'],
+        nombre: json['name'],
+        descripcion: json['description'],
+        imagen: json['image'],
+        comentarios: comentarios,
+        valoracion: mediaValoraciones,
+        accesibilidad: json['accesibilidad']);
   }
 }

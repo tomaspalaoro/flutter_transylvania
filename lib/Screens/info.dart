@@ -21,10 +21,12 @@ class _InfoScreenState extends State<InfoScreen> {
   dynamic conexionProvider;
   Actividad actividad = Actividad();
   List<Comment> comentarios = [];
+  List<String> accesibilidad = [];
 
   void inicializar() {
     if (!inicializado) {
       comentarios = conexionProvider.getCurrentComments();
+      accesibilidad = conexionProvider.getCurrentAccesibilidad();
       inicializado = true;
     }
   }
@@ -109,9 +111,9 @@ class _InfoScreenState extends State<InfoScreen> {
                 style: TextStyle(fontSize: 16),
               ),
             ),
-            SizedBox(height: 16),
             //ICONOS
             Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 //CÓDIGO QR
                 IconButton(
@@ -140,8 +142,34 @@ class _InfoScreenState extends State<InfoScreen> {
                     );
                   },
                 ),
+                IconButton(
+                  icon: Icon(Icons.accessibility),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text('Opciones de accesibilidad'),
+                        content: SizedBox(
+                          height: 200.0,
+                          width: 200.0,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: accesibilidad.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return ListTile(
+                                title: Text(accesibilidad[index]),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                IconButton(icon: Icon(Icons.map), onPressed: (() {})),
               ],
             ),
+            SizedBox(height: 16),
             //CAJA DE COMENTARIOS
             Expanded(
               child: SingleChildScrollView(
@@ -173,19 +201,6 @@ class _InfoScreenState extends State<InfoScreen> {
                     conexionProvider.addComment(actividad.id, comment);
                     setState(() {}); //actualizar comentarios
                   },
-                ),
-              ],
-            ),
-
-            //DIRECCIÓN
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(Icons.map, color: Colors.grey),
-                SizedBox(width: 8),
-                Text(
-                  "666 Transylvania Lane, Umbre, Romania",
-                  style: TextStyle(fontSize: 16),
                 ),
               ],
             ),

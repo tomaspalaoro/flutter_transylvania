@@ -7,6 +7,7 @@ class ConexionProvider extends ChangeNotifier {
   final Conexiones _conexiones = Conexiones();
   List<Actividad> _activities = [];
   List<Comment> _comentarios = [];
+  List<String> _accesibilidad = [];
   Actividad _actividad = Actividad();
 
   List<Actividad> getCurrentActivities() {
@@ -17,14 +18,22 @@ class ConexionProvider extends ChangeNotifier {
     return _comentarios;
   }
 
+  List<String> getCurrentAccesibilidad() {
+    return _accesibilidad;
+  }
+
   Actividad getActividadWhere(String modelo, String nombre) {
     _actividad = Actividad();
     _comentarios = [];
+    _accesibilidad = [];
     for (var element in _activities) {
       if (element.nombre == nombre) {
         _actividad = element;
         for (var element in _actividad.comentarios) {
           _comentarios.add(Comment.fromJson(element));
+        }
+        for (var element in _actividad.accesibilidad) {
+          _accesibilidad.add(element.toString());
         }
       }
     }
