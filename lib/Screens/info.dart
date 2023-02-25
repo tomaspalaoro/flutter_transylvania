@@ -16,10 +16,11 @@ class InfoScreen extends StatefulWidget {
 class _InfoScreenState extends State<InfoScreen> {
   int rating = 0;
   bool favorito = false;
+  final _textController = TextEditingController();
 
   bool inicializado = false;
 
-  dynamic conexionProvider;
+  late ConexionProvider conexionProvider;
   Actividad actividad = Actividad();
   List<Comment> comentarios = [];
   List<String> accesibilidad = [];
@@ -187,7 +188,7 @@ class _InfoScreenState extends State<InfoScreen> {
                 Expanded(
                   //padding: EdgeInsets.symmetric(horizontal: 16),
                   child: TextField(
-                    //controller: _commentController,
+                    controller: _textController,
                     decoration: InputDecoration(
                       hintText: 'Añade un comentario...',
                       border: InputBorder.none,
@@ -198,13 +199,19 @@ class _InfoScreenState extends State<InfoScreen> {
                 IconButton(
                   icon: Icon(Icons.send),
                   onPressed: () {
-                    final comment = Comment(
-                      comment: 'Prueba',
-                      username: 'Prueba',
-                      rating: 5.0,
-                    );
-                    conexionProvider.addComment(actividad.id, comment);
-                    setState(() {}); //actualizar comentarios
+                    if (_textController.text != null) {
+                      final comment = Comment(
+                        comment: _textController.text,
+                        username: 'Prueba',
+                        rating: rating.toDouble(),
+                      );
+                      conexionProvider.addComment(actividad.id, comment);
+                      // cerrar teclado
+                      FocusScope.of(context).unfocus();
+                      _textController.clear();
+
+                      setState(() {}); //actualizar comentarios
+                    }
                   },
                 ),
               ],
