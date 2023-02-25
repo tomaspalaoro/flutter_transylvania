@@ -115,34 +115,35 @@ class _InfoScreenState extends State<InfoScreen> {
                 child: generarComentarios(comentarios),
               ),
             ),
-            //ESCRIBIR COMENTARIO
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: TextField(
-                //controller: _commentController,
-                decoration: InputDecoration(
-                  hintText: 'Añade un comentario...',
-                  border: InputBorder.none,
+            Row(
+              children: [
+                //ESCRIBIR COMENTARIO
+                Expanded(
+                  //padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: TextField(
+                    //controller: _commentController,
+                    decoration: InputDecoration(
+                      hintText: 'Añade un comentario...',
+                      border: InputBorder.none,
+                    ),
+                  ),
                 ),
-              ),
+                //BOTÓN ENVIAR
+                IconButton(
+                  icon: Icon(Icons.send),
+                  onPressed: () {
+                    final comment = Comment(
+                      comment: 'Prueba',
+                      username: 'Prueba',
+                      rating: 5.0,
+                    );
+                    conexionProvider.addComment(actividad.id, comment);
+                    setState(() {}); //actualizar comentarios
+                  },
+                ),
+              ],
             ),
-            //BOTÓN ENVIAR
-            TextButton(
-              onPressed: () {
-                final comment = Comment(
-                  comment: 'Prueba',
-                  username: 'Prueba',
-                  rating: 5.0,
-                );
-                conexionProvider.addComment(actividad.id, comment);
-                setState(() {}); //actualizar comentarios
-              },
-              child: Text('Enviar'),
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.white,
-                textStyle: TextStyle(fontSize: 16),
-              ),
-            ),
+
             //DIRECCIÓN
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

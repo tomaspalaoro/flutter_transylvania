@@ -63,12 +63,14 @@ dynamic listado(List<Modelo> objetos) {
 ///Generar estrellas hasta llegar a 5,
 ///rellenadas según la valoración convertida a int
 ///
-Row mostrarValoracion(dynamic numValoracion) {
-  int numEstrellas = numValoracion.toInt();
+Row mostrarValoracion(double numValoracion) {
+  //int numEstrellas = numValoracion.toInt();
   return Row(
     children: List.generate(5, (index) {
-      if (index < numEstrellas) {
+      if (index < numValoracion.toInt()) {
         return Icon(Icons.star, color: Colors.yellow);
+      } else if (index < numValoracion) {
+        return Icon(Icons.star_half, color: Colors.yellow);
       } else {
         return Icon(Icons.star_border, color: Colors.yellow);
       }

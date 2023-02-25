@@ -18,9 +18,17 @@ class Actividad extends Modelo {
       sumaValoraciones += comentario["rating"];
       numComentarios++;
     }
-    double mediaValoraciones =
-        numComentarios > 0 ? sumaValoraciones / numComentarios : 0.0;
-
+    double mediaValoraciones = 0.0;
+    if (numComentarios > 0) {
+      try {
+        //HACER MEDIA
+        mediaValoraciones = sumaValoraciones / numComentarios;
+        String unDecimal = mediaValoraciones.toStringAsFixed(1);
+        mediaValoraciones = double.parse(unDecimal);
+      } catch (e) {
+        print(e);
+      }
+    }
     return Actividad(
       id: json['id'],
       nombre: json['name'],
