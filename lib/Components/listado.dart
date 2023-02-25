@@ -9,7 +9,7 @@ dynamic listado(List<Modelo> objetos) {
     return ListView.builder(
       itemCount: objetos.length,
       itemBuilder: (BuildContext context, int index) {
-        dynamic numValoracion = 5;
+        double numValoracion = 5.0;
         if (objetos[index].valoracion != null) {
           numValoracion = objetos[index].valoracion;
         }
