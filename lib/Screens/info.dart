@@ -3,6 +3,7 @@ import 'package:flutter_transylvania/Connection/provider.dart';
 import 'package:flutter_transylvania/Models/actividad.dart';
 import 'package:flutter_transylvania/Models/comentario.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 // ignore_for_file: prefer_const_constructors
 
 class InfoScreen extends StatefulWidget {
@@ -109,6 +110,38 @@ class _InfoScreenState extends State<InfoScreen> {
               ),
             ),
             SizedBox(height: 16),
+            //ICONOS
+            Row(
+              children: [
+                //CÓDIGO QR
+                IconButton(
+                  icon: Icon(Icons.qr_code),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Dialog(
+                          child: Container(
+                            color: Colors.white,
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                QrImage(
+                                  data: actividad.nombre,
+                                  version: QrVersions.auto,
+                                  size: 200.0,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
             //CAJA DE COMENTARIOS
             Expanded(
               child: SingleChildScrollView(
