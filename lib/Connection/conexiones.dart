@@ -15,10 +15,10 @@ class Conexiones {
         List<dynamic> arrayJSON = jsonDecode(response.body);
         for (dynamic element in arrayJSON) {
           List<dynamic> listaComentarios = element["comments"];
-          //print(element['name']);
 
           activities.add(Actividad.fromJson(element, listaComentarios));
         }
+        //print("getActividades");
         return activities;
       } else {
         print('Petición fallida en getActividades: ${response.statusCode}.');
