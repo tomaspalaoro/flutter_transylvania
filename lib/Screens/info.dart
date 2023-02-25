@@ -4,6 +4,7 @@ import 'package:flutter_transylvania/Models/actividad.dart';
 import 'package:flutter_transylvania/Models/comentario.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 // ignore_for_file: prefer_const_constructors
 
 class InfoScreen extends StatefulWidget {
@@ -166,7 +167,11 @@ class _InfoScreenState extends State<InfoScreen> {
                     );
                   },
                 ),
-                IconButton(icon: Icon(Icons.map), onPressed: (() {})),
+                IconButton(
+                    icon: Icon(Icons.map),
+                    onPressed: (() {
+                      openMaps(46.224625197459055, 24.776022175201398);
+                    })),
               ],
             ),
             SizedBox(height: 16),
@@ -207,6 +212,15 @@ class _InfoScreenState extends State<InfoScreen> {
           ],
         ));
   }
+}
+
+void openMaps(double latitude, double longitude) async {
+  final String googleMapsUrl =
+      'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+  Uri uri = Uri.parse(googleMapsUrl);
+  try {
+    await launchUrl(uri);
+  } catch (e) {}
 }
 
 Column generarComentarios(List<Comment> comentarios) {
