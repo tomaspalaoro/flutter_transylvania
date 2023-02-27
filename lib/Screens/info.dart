@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_transylvania/Connection/provider.dart';
 import 'package:flutter_transylvania/Models/actividad.dart';
 import 'package:flutter_transylvania/Models/comentario.dart';
+import 'package:flutter_transylvania/Models/modelo.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,7 +23,7 @@ class _InfoScreenState extends State<InfoScreen> {
   bool inicializado = false;
 
   late ConexionProvider conexionProvider;
-  Actividad actividad = Actividad();
+  Modelo modelo = Modelo();
   List<Comment> comentarios = [];
   List<String> accesibilidad = [];
 
@@ -39,8 +40,8 @@ class _InfoScreenState extends State<InfoScreen> {
     Map<dynamic, dynamic> arguments =
         ModalRoute.of(context)?.settings.arguments as Map;
     conexionProvider = Provider.of<ConexionProvider>(context, listen: false);
-    actividad = conexionProvider.getActividadWhere(
-        arguments['modelo'], arguments['nombre']);
+    modelo =
+        conexionProvider.getWhere(arguments['modelo'], arguments['nombre']);
     inicializar();
     return Scaffold(
         appBar: AppBar(
@@ -50,7 +51,7 @@ class _InfoScreenState extends State<InfoScreen> {
           children: [
             Flexible(
               child: Image.network(
-                actividad.imagen ?? "",
+                modelo.imagen ?? "",
                 height: 200,
                 width: double.infinity,
                 fit: BoxFit.cover,
@@ -65,7 +66,7 @@ class _InfoScreenState extends State<InfoScreen> {
                 //Texto en flexible y en overflow
                 Flexible(
                   child: Text(
-                    actividad.nombre ?? "Nombre vacío",
+                    modelo.nombre ?? "Nombre vacío",
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 20),
                   ),
@@ -110,7 +111,7 @@ class _InfoScreenState extends State<InfoScreen> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                actividad.descripcion ?? "Descripción vacía",
+                modelo.descripcion ?? "Descripción vacía",
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -133,7 +134,7 @@ class _InfoScreenState extends State<InfoScreen> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 QrImage(
-                                  data: actividad.nombre,
+                                  data: modelo.nombre,
                                   version: QrVersions.auto,
                                   size: 200.0,
                                 ),
@@ -209,7 +210,7 @@ class _InfoScreenState extends State<InfoScreen> {
                             "Prueba",
                         rating: rating.toDouble(),
                       );
-                      conexionProvider.addComment(actividad.id, comment);
+                      conexionProvider.addComment(modelo.id, comment);
                       // cerrar teclado
                       FocusScope.of(context).unfocus();
                       _textController.clear();

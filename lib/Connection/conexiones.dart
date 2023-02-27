@@ -1,5 +1,7 @@
 import 'dart:convert'; //para trabajar con JSON
 import 'package:flutter_transylvania/Models/actividad.dart';
+import 'package:flutter_transylvania/Models/cultura.dart';
+import 'package:flutter_transylvania/Models/ocio.dart';
 import 'package:http/http.dart' as http; //import http
 
 const String RUTA = "https://fluttertransylvania-default-rtdb.firebaseio.com/";
@@ -25,6 +27,51 @@ class Conexiones {
     } catch (e) {
       print('Excepcion getActividades: $e');
       return activities;
+    }
+  }
+
+  Future<List<Cultura>> getCulturas() async {
+    List<Cultura> culturas = [];
+    try {
+      final url = Uri.parse('${RUTA}Cultura.json');
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        List<dynamic> arrayJSON = jsonDecode(response.body);
+        for (dynamic element in arrayJSON) {
+          culturas.add(Cultura.fromJson(element));
+        }
+        return culturas;
+      } else {
+        print('Petición fallida en getCulturas: ${response.statusCode}.');
+        return culturas;
+      }
+    } catch (e) {
+      print('Excepcion getCulturas: $e');
+      return culturas;
+    }
+  }
+
+  Future<List<Ocio>> getOcios() async {
+    List<Ocio> ocios = [];
+    try {
+      final url = Uri.parse('${RUTA}Ocio.json');
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        List<dynamic> arrayJSON = jsonDecode(response.body);
+        for (dynamic element in arrayJSON) {
+          ocios.add(Ocio.fromJson(element));
+        }
+        //print("getActividades");
+        return ocios;
+      } else {
+        print('Petición fallida en getOcios: ${response.statusCode}.');
+        return ocios;
+      }
+    } catch (e) {
+      print('Excepcion getOcios: $e');
+      return ocios;
     }
   }
 

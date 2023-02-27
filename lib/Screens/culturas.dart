@@ -3,7 +3,7 @@ import 'package:flutter_transylvania/Components/listado.dart';
 import 'package:flutter_transylvania/Connection/provider.dart';
 import 'package:provider/provider.dart';
 
-class OcioScreen extends StatelessWidget {
+class CulturaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final conexionProvider =
@@ -11,11 +11,11 @@ class OcioScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("Ocio"),
+          title: Text("Cultura"),
         ),
         body: FutureBuilder(
-            future: conexionProvider.loadOcios(),
+            future: conexionProvider.loadCulturas(),
             builder: (context, snapshot) =>
-                listado(conexionProvider.getCurrentOcios())));
+                listado(conexionProvider.getCurrentCulturas())));
   }
 }

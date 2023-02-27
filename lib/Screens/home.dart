@@ -36,7 +36,13 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(height: 32.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
+                  children: [
+                    ElevatedButton(
+                      child: Text('Cultura'),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/cultura');
+                      },
+                    ),
                     ElevatedButton(
                       child: Text('Actividades'),
                       onPressed: () {

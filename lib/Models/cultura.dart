@@ -1,7 +1,7 @@
 import 'package:flutter_transylvania/Models/modelo.dart';
 
-class Ocio extends Modelo {
-  Ocio(
+class Cultura extends Modelo {
+  Cultura(
       {super.id,
       super.nombre,
       super.descripcion,
@@ -10,7 +10,7 @@ class Ocio extends Modelo {
       super.comentarios,
       super.accesibilidad});
 
-  factory Ocio.fromJson(Map<String, dynamic> json) {
+  factory Cultura.fromJson(Map<String, dynamic> json) {
     List<dynamic> comentarios = json['comments'];
     //CALCULAR RATING
     double sumaValoraciones = 0.0;
@@ -30,7 +30,7 @@ class Ocio extends Modelo {
         print(e);
       }
     }
-    return Ocio(
+    return Cultura(
         id: json['id'],
         nombre: json['name'],
         descripcion: json['description'],
