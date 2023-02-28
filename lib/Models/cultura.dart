@@ -7,8 +7,7 @@ class Cultura extends Modelo {
       super.descripcion,
       super.imagen,
       super.valoracion,
-      super.comentarios,
-      super.accesibilidad});
+      super.comentarios});
 
   factory Cultura.fromJson(Map<String, dynamic> json) {
     List<dynamic> comentarios = json['comments'];
@@ -36,7 +35,6 @@ class Cultura extends Modelo {
         descripcion: json['description'],
         imagen: json['image'],
         comentarios: comentarios,
-        valoracion: mediaValoraciones,
-        accesibilidad: json['accesibilidad']);
+        valoracion: mediaValoraciones);
   }
 }

@@ -95,10 +95,21 @@ class ConexionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addComment(String activityId, Comment comment) async {
-    _comentarios.add(comment);
-    await _conexiones.addComentario(
-        activityId, comment.comment, comment.rating, comment.username);
+  Future<void> addComment(String modelo, String id, Comment comment) async {
+    print("add comment");
+    bool yaHay = false;
+    for (var element in _comentarios) {
+      if (element.username == comment.username) {
+        yaHay = true;
+      }
+    }
+    if (!yaHay) {
+      _comentarios.add(comment);
+      await _conexiones.addComentario(
+          modelo, id, comment.comment, comment.rating, comment.username);
+    } else {
+      print("Ya hay un comentario");
+    }
     notifyListeners();
   }
 }

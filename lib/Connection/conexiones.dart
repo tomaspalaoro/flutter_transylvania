@@ -63,7 +63,6 @@ class Conexiones {
         for (dynamic element in arrayJSON) {
           ocios.add(Ocio.fromJson(element));
         }
-        //print("getActividades");
         return ocios;
       } else {
         print('Petición fallida en getOcios: ${response.statusCode}.');
@@ -75,15 +74,24 @@ class Conexiones {
     }
   }
 
-  Future<void> addComentario(
-      String activityId, String comment, double rating, String username) async {
+  Future<void> addComentario(String modelo, String id, String comment,
+      double rating, String username) async {
     try {
-      Uri url = Uri.parse('${RUTA}Actividad.json');
+      Uri url;
+      if (modelo.contains("Actividad")) {
+        url = Uri.parse('${RUTA}Actividad.json');
+      } else if (modelo.contains("Ocio")) {
+        url = Uri.parse('${RUTA}Ocio.json');
+      } else if (modelo.contains("Cultura")) {
+        url = Uri.parse('${RUTA}Cultura.json');
+      } else {
+        url = Uri.parse('${RUTA}Actividad.json');
+      }
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
         List<dynamic> json = jsonDecode(response.body);
-        dynamic activity = json.firstWhere((a) => a['id'] == activityId);
+        dynamic activity = json.firstWhere((a) => a['id'] == id);
 
         Map<String, dynamic> comentario = {
           'comment': comment,

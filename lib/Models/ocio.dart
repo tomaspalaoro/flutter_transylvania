@@ -8,7 +8,7 @@ class Ocio extends Modelo {
       super.imagen,
       super.valoracion,
       super.comentarios,
-      super.accesibilidad});
+      super.precio});
 
   factory Ocio.fromJson(Map<String, dynamic> json) {
     List<dynamic> comentarios = json['comments'];
@@ -37,6 +37,6 @@ class Ocio extends Modelo {
         imagen: json['image'],
         comentarios: comentarios,
         valoracion: mediaValoraciones,
-        accesibilidad: json['accesibilidad']);
+        precio: json['precio']);
   }
 }

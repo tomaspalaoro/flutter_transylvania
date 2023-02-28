@@ -15,5 +15,6 @@ class Modelo {
       this.imagen,
       this.valoracion,
       this.comentarios,
-      this.accesibilidad});
+      this.accesibilidad,
+      this.precio});
 }

@@ -210,7 +210,8 @@ class _InfoScreenState extends State<InfoScreen> {
                             "Prueba",
                         rating: rating.toDouble(),
                       );
-                      conexionProvider.addComment(modelo.id, comment);
+                      conexionProvider.addComment(
+                          arguments['modelo'], modelo.id, comment);
                       // cerrar teclado
                       FocusScope.of(context).unfocus();
                       _textController.clear();
