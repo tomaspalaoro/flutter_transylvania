@@ -4,6 +4,7 @@ import 'package:flutter_transylvania/Screens/actividades.dart';
 import 'package:flutter_transylvania/Screens/culturas.dart';
 import 'package:flutter_transylvania/Screens/home.dart';
 import 'package:flutter_transylvania/Screens/info.dart';
+import 'package:flutter_transylvania/Screens/login.dart';
 import 'package:flutter_transylvania/Screens/ocios.dart';
 import 'package:flutter_transylvania/theme.dart';
 import 'package:provider/provider.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
       theme: temaOscuro,
       initialRoute: '/',
       routes: {
-        '/': (context) => HomeScreen(),
+        '/': (context) => LoginScreen(),
         '/home': (context) => HomeScreen(),
         '/cultura': (context) => CulturaScreen(),
         '/actividades': (context) => ActividadesScreen(),

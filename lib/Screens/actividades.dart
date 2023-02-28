@@ -13,8 +13,7 @@ class ActividadesScreen extends StatefulWidget {
 class _ActividadesScreenState extends State<ActividadesScreen> {
   @override
   Widget build(BuildContext context) {
-    final conexionProvider =
-        Provider.of<ConexionProvider>(context, listen: false);
+    final conexionProvider = Provider.of<ConexionProvider>(context);
 
     return Scaffold(
         appBar: AppBar(

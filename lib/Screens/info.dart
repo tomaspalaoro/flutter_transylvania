@@ -147,7 +147,7 @@ class _InfoScreenState extends State<InfoScreen> {
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.accessibility),
+                  icon: Icon(Icons.wheelchair_pickup),
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -161,7 +161,10 @@ class _InfoScreenState extends State<InfoScreen> {
                             itemCount: accesibilidad.length,
                             itemBuilder: (BuildContext context, int index) {
                               return ListTile(
-                                title: Text(accesibilidad[index]),
+                                title: Text(
+                                  accesibilidad[index],
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               );
                             },
                           ),
@@ -201,7 +204,8 @@ class _InfoScreenState extends State<InfoScreen> {
                 IconButton(
                   icon: Icon(Icons.send),
                   onPressed: () {
-                    if (_textController.text != null) {
+                    if (_textController.text != null &&
+                        _textController.text != "") {
                       final comment = Comment(
                         comment: _textController.text,
                         username: conexionProvider
@@ -286,10 +290,7 @@ class _InfoScreenState extends State<InfoScreen> {
                     ),
                     rowEstrellasComments(cantEstrellas),
                     if (username ==
-                            conexionProvider
-                                .getPreferencias()
-                                .getString("user") ||
-                        username == "Prueba")
+                        conexionProvider.getPreferencias().getString("user"))
                       IconButton(onPressed: borrar, icon: Icon(Icons.close))
                   ],
                 ),
