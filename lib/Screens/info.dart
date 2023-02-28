@@ -225,6 +225,86 @@ class _InfoScreenState extends State<InfoScreen> {
           ],
         ));
   }
+
+  Column generarComentarios(List<Comment> comentarios) {
+    List<Row> rows = [];
+    for (var element in comentarios) {
+      rows.add(
+          rowComentario(element.username, element.comment, element.rating));
+    }
+    return Column(
+      children: rows,
+    );
+  }
+
+  Row rowEstrellasComments(int cantidadEstrellas) {
+    List<Icon> icons = [];
+    for (int i = 0; i < cantidadEstrellas; i++) {
+      icons.add(Icon(Icons.star));
+    }
+    return Row(
+      children: icons,
+    );
+  }
+
+  Row rowComentario(String username, String comentario, var valoracion) {
+    Future<void> borrar() async {
+      conexionProvider.removeComment(
+          modelo.runtimeType.toString(), modelo.id, comentario, username);
+      setState(() {});
+    }
+
+    int cantEstrellas = valoracion.toInt();
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CircleAvatar(
+            backgroundImage:
+                NetworkImage('https://via.placeholder.com/150x150'),
+            radius: 20,
+          ),
+        ),
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: [
+                    Text(
+                      username,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    rowEstrellasComments(cantEstrellas),
+                    if (username ==
+                            conexionProvider
+                                .getPreferencias()
+                                .getString("user") ||
+                        username == "Prueba")
+                      IconButton(onPressed: borrar, icon: Icon(Icons.close))
+                  ],
+                ),
+                SizedBox(height: 8),
+                Text(
+                  comentario,
+                  style: TextStyle(fontSize: 14),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 void openMaps(double latitude, double longitude) async {
@@ -234,69 +314,4 @@ void openMaps(double latitude, double longitude) async {
   try {
     await launchUrl(uri);
   } catch (e) {}
-}
-
-Column generarComentarios(List<Comment> comentarios) {
-  List<Row> rows = [];
-  for (var element in comentarios) {
-    rows.add(rowComentario(element.username, element.comment, element.rating));
-  }
-  return Column(
-    children: rows,
-  );
-}
-
-Row rowEstrellasComments(int cantidadEstrellas) {
-  List<Icon> icons = [];
-  for (int i = 0; i < cantidadEstrellas; i++) {
-    icons.add(Icon(Icons.star));
-  }
-  return Row(
-    children: icons,
-  );
-}
-
-Row rowComentario(String username, String comentario, var valoracion) {
-  int cantEstrellas = valoracion.toInt();
-  return Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: CircleAvatar(
-          backgroundImage: NetworkImage('https://via.placeholder.com/150x150'),
-          radius: 20,
-        ),
-      ),
-      Expanded(
-        child: Container(
-          margin: const EdgeInsets.all(8.0),
-          padding: const EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                children: [
-                  Text(
-                    username,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  rowEstrellasComments(cantEstrellas)
-                ],
-              ),
-              SizedBox(height: 8),
-              Text(
-                comentario,
-                style: TextStyle(fontSize: 14),
-              ),
-            ],
-          ),
-        ),
-      ),
-    ],
-  );
 }

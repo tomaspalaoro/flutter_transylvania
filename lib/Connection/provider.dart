@@ -112,4 +112,12 @@ class ConexionProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  Future<void> removeComment(String modelo, String idModelo, String comentario,
+      String username) async {
+    _comentarios.removeWhere((element) =>
+        element.username == username && element.comment == comentario);
+    await _conexiones.removeComentario(modelo, idModelo, username);
+    notifyListeners();
+  }
 }

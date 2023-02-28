@@ -1,5 +1,6 @@
 import 'dart:convert'; //para trabajar con JSON
 import 'package:flutter_transylvania/Models/actividad.dart';
+import 'package:flutter_transylvania/Models/comentario.dart';
 import 'package:flutter_transylvania/Models/cultura.dart';
 import 'package:flutter_transylvania/Models/ocio.dart';
 import 'package:http/http.dart' as http; //import http
@@ -110,6 +111,46 @@ class Conexiones {
       }
     } catch (e) {
       print('Excepcion addComentario: $e');
+    }
+  }
+
+  Future<void> removeComentario(
+      String modelo, String idModelo, String username) async {
+    try {
+      Uri url;
+      if (modelo.contains("Actividad")) {
+        url = Uri.parse('${RUTA}Actividad.json');
+      } else if (modelo.contains("Ocio")) {
+        url = Uri.parse('${RUTA}Ocio.json');
+      } else if (modelo.contains("Cultura")) {
+        url = Uri.parse('${RUTA}Cultura.json');
+      } else {
+        url = Uri.parse('${RUTA}Actividad.json');
+      }
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        List<dynamic> json = jsonDecode(response.body);
+        dynamic activity = json.firstWhere((a) => a['id'] == idModelo);
+
+        List<dynamic> comentarios = activity['comments'];
+
+        int index = comentarios.indexWhere((c) => c['username'] == username);
+
+        if (index >= 0) {
+          comentarios.removeAt(index);
+          final updatedJson = jsonEncode(json);
+
+          await http.put(url, body: updatedJson);
+          print("Comentario Eliminado");
+        } else {
+          print('removeComentario No hay index');
+        }
+      } else {
+        print('Petición fallida en removeComentario: ${response.statusCode}.');
+      }
+    } catch (e) {
+      print('Excepcion removeComentario: $e');
     }
   }
 }
