@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Aaaaa',
       theme: temaOscuro,
-      initialRoute: '/',
+      initialRoute: '/home',
       routes: {
         '/': (context) => LoginScreen(),
         '/home': (context) => HomeScreen(),

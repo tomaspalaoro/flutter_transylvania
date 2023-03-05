@@ -1,6 +1,6 @@
 class Comment {
   String comment;
-  double rating;
+  var rating;
   String username;
 
   Comment(

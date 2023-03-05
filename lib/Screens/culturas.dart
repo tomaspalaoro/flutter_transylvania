@@ -6,8 +6,7 @@ import 'package:provider/provider.dart';
 class CulturaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final conexionProvider =
-        Provider.of<ConexionProvider>(context, listen: false);
+    final conexionProvider = Provider.of<ConexionProvider>(context);
 
     return Scaffold(
         appBar: AppBar(

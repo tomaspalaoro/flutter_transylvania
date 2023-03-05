@@ -17,7 +17,12 @@ class Conexiones {
       if (response.statusCode == 200) {
         List<dynamic> arrayJSON = jsonDecode(response.body);
         for (dynamic element in arrayJSON) {
-          activities.add(Actividad.fromJson(element));
+          Actividad nuevaActividad = Actividad.fromJson(element);
+          if (!await validateImage(nuevaActividad.imagen)) {
+            nuevaActividad.imagen =
+                "https://picsum.photos/600/300"; //placeholder
+          }
+          activities.add(nuevaActividad);
         }
         //print("getActividades");
         return activities;
@@ -40,7 +45,11 @@ class Conexiones {
       if (response.statusCode == 200) {
         List<dynamic> arrayJSON = jsonDecode(response.body);
         for (dynamic element in arrayJSON) {
-          culturas.add(Cultura.fromJson(element));
+          Cultura nuevaCultura = Cultura.fromJson(element);
+          if (!await validateImage(nuevaCultura.imagen)) {
+            nuevaCultura.imagen = "https://picsum.photos/600/300"; //placeholder
+          }
+          culturas.add(nuevaCultura);
         }
         return culturas;
       } else {
@@ -62,7 +71,12 @@ class Conexiones {
       if (response.statusCode == 200) {
         List<dynamic> arrayJSON = jsonDecode(response.body);
         for (dynamic element in arrayJSON) {
-          ocios.add(Ocio.fromJson(element));
+          Ocio nuevoOcio = Ocio.fromJson(element);
+          nuevoOcio.comentarios ??= [];
+          if (!await validateImage(nuevoOcio.imagen)) {
+            nuevoOcio.imagen = "https://picsum.photos/600/300"; //placeholder
+          }
+          ocios.add(nuevoOcio);
         }
         return ocios;
       } else {
@@ -80,12 +94,16 @@ class Conexiones {
     try {
       Uri url;
       if (modelo.contains("Actividad")) {
+        print("Añadiendo actividad");
         url = Uri.parse('${RUTA}Actividad.json');
       } else if (modelo.contains("Ocio")) {
+        print("Añadiendo Ocio");
         url = Uri.parse('${RUTA}Ocio.json');
       } else if (modelo.contains("Cultura")) {
+        print("Añadiendo Cultura");
         url = Uri.parse('${RUTA}Cultura.json');
       } else {
+        print("Default");
         url = Uri.parse('${RUTA}Actividad.json');
       }
       final response = await http.get(url);
@@ -152,5 +170,25 @@ class Conexiones {
     } catch (e) {
       print('Excepcion removeComentario: $e');
     }
+  }
+
+  Future<bool> validateImage(String imageUrl) async {
+    http.Response res;
+    try {
+      res = await http.get(Uri.parse(imageUrl));
+    } catch (e) {
+      return false;
+    }
+
+    if (res.statusCode != 200) return false;
+    Map<String, dynamic> data = res.headers;
+    return checkIfImage(data['content-type']);
+  }
+
+  bool checkIfImage(String param) {
+    if (param == 'image/jpeg' || param == 'image/png' || param == 'image/gif') {
+      return true;
+    }
+    return false;
   }
 }
